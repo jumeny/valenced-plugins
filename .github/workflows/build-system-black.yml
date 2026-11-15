@@ -7,8 +7,6 @@ on:
       - ".github/workflows/build-system-black.yml"
 permissions:
   contents: write
-  pages: write
-  id-token: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +25,7 @@ jobs:
           node-version: 22
       - name: Install the official build toolchain
         working-directory: upstream
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: Restore pinned Valenced build tools
         working-directory: upstream
         run: npm run prepare:tools

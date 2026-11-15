@@ -27,22 +27,6 @@
             }
           }
         },
-        "1.0.1": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
-          "sha256": "7726bf2183423a0521061471f01b2e8109d60eea2930b0cbbfe000703ad3b487",
-          "size": 6622,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.1 <2"
-            }
-          }
-        },
         "1.0.2": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.2.zip",
           "sha256": "09f561171ee51c650724a1980f9ecea26d5e1fdb413d461e90352eca6ca21b44",

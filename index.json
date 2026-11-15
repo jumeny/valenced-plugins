@@ -6,9 +6,9 @@
     "mylloon.theme.system-black": {
       "name": "AMOLED",
       "description": "Legacy AMOLED theme, before TabsV2.",
-      "author": "Mylloon <158260864623968257>",
+      "author": "jmny",
       "channels": {
-        "latest": "1.0.4"
+        "latest": "1.0.5"
       },
       "versions": {
         "1.0.0": {

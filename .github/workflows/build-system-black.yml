@@ -8,15 +8,23 @@ on:
       - ".github/workflows/build-system-black.yml"
 permissions:
   contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
 jobs:
   package:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Build 1.0.1 ZIP and update repository index
         run: |
           python3 - <<'PY'
-          import hashlib, json, os, zipfile
+          import hashlib, json, zipfile
           from pathlib import Path
 
           root = Path(".")
@@ -26,8 +34,6 @@ jobs:
           version = manifest["version"]
           assert version == "1.0.1", f"Expected 1.0.1, got {version}"
 
-          # The theme source is plain JavaScript syntax stored as .ts; package it
-          # as the script path declared by the manifest.
           script_name = manifest["dist"]["script"]
           script_source = theme / "js/index.ts"
           output = root / "pool" / f'{manifest["id"]}@{version}.zip'
@@ -61,3 +67,11 @@ jobs:
           git add pool index.json
           git commit -m "Release System Black theme 1.0.1" || exit 0
           git push
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

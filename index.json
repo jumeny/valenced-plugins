@@ -8,7 +8,7 @@
       "description": "Mylloon's original pure-black Discord theme, ported to the native Valenced Themes API.",
       "author": "Mylloon <158260864623968257>",
       "channels": {
-        "latest": "1.0.2"
+        "latest": "1.0.3"
       },
       "versions": {
         "1.0.0": {
@@ -31,6 +31,22 @@
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.2.zip",
           "sha256": "09f561171ee51c650724a1980f9ecea26d5e1fdb413d461e90352eca6ca21b44",
           "size": 6626,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": ">=352.2"
+            },
+            "valenced.api.themes": {
+              "version": ">=1.0.1 <2"
+            }
+          }
+        },
+        "1.0.3": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.3.zip",
+          "sha256": "4fc757f1143fe4770c24b764a0d60ea7bcb1cc76da17f9fee0fc0c83f6641e53",
+          "size": 9065,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

@@ -1,11 +1,11 @@
 {
   "format": 1,
-  "name": "Jumeny's Valenced Plugins",
+  "name": "jmny",
   "description": "Community plugins and themes for Valenced.",
   "plugins": {
     "mylloon.theme.system-black": {
-      "name": "System Black (Mylloon)",
-      "description": "Mylloon's original pure-black Discord theme.",
+      "name": "AMOLED",
+      "description": "Legacy AMOLED theme, before TabsV2.",
       "author": "Mylloon <158260864623968257>",
       "channels": {
         "latest": "1.0.0"

@@ -1,8 +1,8 @@
 {
   "format": 1,
   "id": "mylloon.theme.system-black",
-  "name": "System Black (Mylloon)",
-  "description": "Mylloon's original pure-black theme, using Valenced's semantic theme colour pipeline.",
+  "name": "AMOLED",
+  "description": "Legacy AMOLED theme, before TabsV2.",
   "author": "Mylloon <158260864623968257>",
   "version": "1.0.1",
   "dependencies": {

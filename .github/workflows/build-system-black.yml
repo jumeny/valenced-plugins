@@ -1,28 +1,39 @@
-name: Build and publish System Black theme
+name: Build and publish AMOLED theme
 on:
   push:
     branches: [main]
     paths:
       - "themes/system-black/**"
       - ".github/workflows/build-system-black.yml"
+
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: amoled-release
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out this plugin repository
         uses: actions/checkout@v4
+
       - name: Check out the official Valenced build toolchain
         uses: actions/checkout@v4
         with:
           repository: Accentaro/Valenced-Plugins
           ref: 4658703b5a8fcc38b816dc448eaff87f98b4411a
           path: upstream
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
+
       - name: Prepare dependencies without triggering the CLI's premature prepare hook
         working-directory: upstream
         run: |
@@ -30,46 +41,72 @@ jobs:
           import fs from 'node:fs'
           const p = JSON.parse(fs.readFileSync('package.json', 'utf8'))
           delete p.dependencies['@valenced/plugin-cli']
-          fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\\n')
+          const cleanJson = JSON.stringify(p, null, 2)
+          JSON.parse(cleanJson)
+          fs.writeFileSync('package.json', cleanJson)
           NODE
           npm install --ignore-scripts --legacy-peer-deps
+
       - name: Install the pinned official CLI source
         working-directory: upstream
         run: |
           mkdir -p node_modules/@valenced
           git clone https://github.com/Valenced/valenced-plugin-cli.git node_modules/@valenced/plugin-cli
           git -C node_modules/@valenced/plugin-cli checkout c8854005208fa29c0f56eac265fd596320a48713
+
       - name: Restore pinned Valenced build tools
         working-directory: upstream
         run: |
-          sed -i "s/entry.endsWith('.d.ts')/entry.endsWith('.d.ts') || entry.endsWith('.json')/" scripts/prepare-tools.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          const file = 'scripts/prepare-tools.mjs'
+          const source = fs.readFileSync(file, 'utf8')
+          const oldLine = "if (entry.endsWith('.d.ts') || entry === 'lib')"
+          const newLine = "if (entry.endsWith('.d.ts') || entry.endsWith('.json') || entry === 'lib')"
+          if (!source.includes(oldLine) && !source.includes(newLine)) {
+            throw new Error('Pinned type restoration script changed; inspect before building')
+          }
+          fs.writeFileSync(file, source.replace(oldLine, newLine))
+          NODE
           npm run prepare:tools
-      - name: Compile and package System Black using the official CLI
+
+      - name: Compile and package AMOLED using the official CLI
         run: |
           rm -rf upstream/themes/system-black
           cp -R themes/system-black upstream/themes/system-black
           cd upstream
           npm run package
+          test -s "build/dist/mylloon.theme.system-black@1.0.1.zip"
           mkdir -p ../pool
           cp "build/dist/mylloon.theme.system-black@1.0.1.zip" "../pool/mylloon.theme.system-black@1.0.1.zip"
+
       - name: Validate ZIP contents and update index digest
         run: |
           python3 - <<'PY'
           import hashlib, json, zipfile
           from pathlib import Path
+
+          description = "Legacy AMOLED theme, before TabsV2."
           package_path = Path("pool/mylloon.theme.system-black@1.0.1.zip")
           with zipfile.ZipFile(package_path) as z:
               names = set(z.namelist())
-              assert "manifest.json" in names, names
-              assert "index.js" in names, names
+              required = {"manifest.json", "index.js", "LICENSE", "LICENSE.rain"}
+              assert required.issubset(names), (required - names)
               source = z.read("index.js").decode("utf-8")
+              assert source.strip(), "Compiled entry point is empty"
               assert "export default" not in source, "Bundle still contains uncompiled TypeScript"
               manifest = json.loads(z.read("manifest.json"))
               assert manifest["version"] == "1.0.1", manifest
+              assert manifest["name"] == "AMOLED", manifest
+              assert manifest["description"] == description, manifest
+
           package = package_path.read_bytes()
           path = Path("index.json")
           index = json.loads(path.read_text())
+          assert index["name"] == "jmny", index["name"]
           plugin = index["plugins"]["mylloon.theme.system-black"]
+          plugin["name"] = "AMOLED"
+          plugin["description"] = description
           plugin["versions"]["1.0.1"] = {
               "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
               "sha256": hashlib.sha256(package).hexdigest(),
@@ -81,14 +118,40 @@ jobs:
               }
           }
           plugin["channels"]["latest"] = "1.0.1"
-          plugin["description"] = "Mylloon's original pure-black Discord theme with updated composer and divider colours."
-          path.write_text(json.dumps(index, indent=2) + chr(10))
-          print("Validated compiled ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
+          path.write_text(json.dumps(index, indent=2) + "\n")
+          print("Validated AMOLED ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
-      - name: Commit the package and index
+
+      - name: Commit the validated package and index
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pool/mylloon.theme.system-black@1.0.1.zip index.json
-          git commit -m "Release compiled System Black theme 1.0.1"
+          git commit -m "Release AMOLED theme 1.0.1"
           git push
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload the repository site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy the updated repository to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

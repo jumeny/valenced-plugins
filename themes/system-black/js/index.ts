@@ -4,7 +4,7 @@ export default plugin({
   preInit({ themes }) {
     themes.registerGroup('mylloon', {
       name: 'Mylloon',
-      description: "Mylloon's original pure-black Discord theme."
+      description: "Legacy AMOLED theme, before TabsV2."
     });
     const semantic = {
       BACKGROUND_BASE_LOWEST:'#000000', BACKGROUND_BASE_LOWER:'#000000',
@@ -57,8 +57,8 @@ export default plugin({
       PLUM_19:'#08080A', PLUM_20:'#000000', PLUM_23:'#000000', PLUM_24:'#08080A'
     };
     themes.registerTheme('mylloon', 'system-black', {
-      name: 'System Black',
-      description: "Mylloon's legacy black palette with modern Discord surfaces, composer and control borders.",
+      name: 'AMOLED',
+      description: "Legacy AMOLED theme, before TabsV2.",
       getColors(discord) {
         return {
           raw: Object.assign({}, discord.raw, raw),

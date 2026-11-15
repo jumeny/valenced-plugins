@@ -3,6 +3,11 @@ name: Deploy Valenced plugin repository
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "themes/system-black/**"
+      - "index.json"
+      - ".github/workflows/build-system-black.yml"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -23,6 +28,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:

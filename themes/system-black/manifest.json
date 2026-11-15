@@ -4,7 +4,7 @@
   "name": "System Black (Mylloon)",
   "description": "Mylloon's original pure-black theme, expanded for modern Discord surfaces and controls.",
   "author": "Mylloon <158260864623968257>",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "valenced.api": {
       "version": ">=1 <2"

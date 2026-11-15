@@ -1,0 +1,90 @@
+name: Build and publish System Black theme
+on:
+  push:
+    branches: [main]
+    paths:
+      - "themes/system-black/**"
+      - ".github/workflows/build-system-black.yml"
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this plugin repository
+        uses: actions/checkout@v4
+      - name: Check out the official Valenced build toolchain
+        uses: actions/checkout@v4
+        with:
+          repository: Accentaro/Valenced-Plugins
+          ref: 4658703b5a8fcc38b816dc448eaff87f98b4411a
+          path: upstream
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install the official build toolchain
+        working-directory: upstream
+        run: npm ci
+      - name: Restore pinned Valenced build tools
+        working-directory: upstream
+        run: npm run prepare:tools
+      - name: Compile and package System Black using the official CLI
+        run: |
+          rm -rf upstream/themes/system-black
+          cp -R themes/system-black upstream/themes/system-black
+          cd upstream
+          npm run package
+          mkdir -p ../pool
+          cp "build/dist/mylloon.theme.system-black@1.0.1.zip" "../pool/mylloon.theme.system-black@1.0.1.zip"
+      - name: Update repository index with the built ZIP digest
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          package = Path("pool/mylloon.theme.system-black@1.0.1.zip").read_bytes()
+          path = Path("index.json")
+          index = json.loads(path.read_text())
+          plugin = index["plugins"]["mylloon.theme.system-black"]
+          plugin["versions"]["1.0.1"] = {
+              "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
+              "sha256": hashlib.sha256(package).hexdigest(),
+              "size": len(package),
+              "dependencies": {
+                  "valenced.api": {"version": ">=1 <2"},
+                  "discord": {"version": ">=352.2"},
+                  "valenced.api.themes": {"version": ">=1.0.1 <2"}
+              }
+          }
+          plugin["channels"]["latest"] = "1.0.1"
+          plugin["description"] = "Mylloon's original pure-black Discord theme with updated composer and divider colours."
+          path.write_text(json.dumps(index, indent=2) + "\n")
+          print("Built ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
+          PY
+      - name: Commit the package and index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pool/mylloon.theme.system-black@1.0.1.zip index.json
+          git commit -m "Release compiled System Black theme 1.0.1"
+          git push
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload repository for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy repository to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

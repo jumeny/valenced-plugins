@@ -25,10 +25,12 @@ jobs:
           node-version: 22
       - name: Install the official build toolchain
         working-directory: upstream
-        run: npm ci --legacy-peer-deps
+        run: npm ci --ignore-scripts --legacy-peer-deps
       - name: Restore pinned Valenced build tools
         working-directory: upstream
-        run: npm run prepare:tools
+        run: |
+          sed -i "s/entry.endsWith('.d.ts')/entry.endsWith('.d.ts') || entry.endsWith('.json')/" scripts/prepare-tools.mjs
+          npm run prepare:tools
       - name: Compile and package System Black using the official CLI
         run: |
           rm -rf upstream/themes/system-black

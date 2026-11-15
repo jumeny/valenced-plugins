@@ -1,73 +1,66 @@
-/// <reference types="@valenced/themes-api" />
-
-import { lazyColors } from '../../../shared/theme-kit'
-import type { Look, Palette, Tone } from '../../../shared/theme-kit'
-
-// System Black keeps Discord's normal hue colours, but collapses neutral
-// surfaces to the original #000000 / #08080A palette.
-const tone: Tone = {
-  greys: [
-    ['#000000', '#000000'], ['#2c2d32', '#000000'],
-    ['#323339', '#000000'], ['#393a41', '#08080A'],
-    ['#41434a', '#08080A'], ['#595a63', '#1e1f22'],
-    ['#81828a', '#77777d'], ['#97979f', '#999aa1'],
-    ['#abacb2', '#b5b5b5'], ['#c5c6ca', '#d0d0d0'],
-    ['#efeff1', '#efeff1'], ['#f3f3f4', '#f3f3f4'],
-    ['#fbfbfb', '#fbfbfb'], ['#ffffff', '#ffffff'],
-  ],
-  hues: {
-    red: '#d22d39', orange: '#fe6e0d', yellow: '#faaa00',
-    green: '#23a55a', teal: '#4cb5bf', blue: '#0074e3',
-    blurple: '#5865f2', purple: '#a056f2', pink: '#ff4cd2',
-  },
-}
-
-const black: Palette = {
-  rail: '#000000', floor: '#000000', panel: '#000000',
-  page: '#08080A', card: '#08080A', popup: '#08080A',
-  input: '#08080A', control: '#08080A', pressed: '#1e1f22',
-  heading: '#ffffff', strong: '#f3f3f4', text: '#dcddde',
-  subtle: '#b5b5b5', muted: '#999aa1', faint: '#77777d',
-  divider: '#ffffff14', border: '#ffffff1f', borderStrong: '#ffffff29',
-  accent: '#5865f2', accentPress: '#4752c4', onAccent: '#ffffff',
-  accentSoft: '#5865f23d', accentText: '#a0a9fa', brand: '#5865f2',
-  rowIcon: '#b5b5b5', selection: '#1e1f22',
-  link: '#00a8fc', mentionText: '#ffffff', mentionPill: '#5865f23d',
-  mentionBg: '#5865f21a', replyBg: '#ffffff0a', keyword: '#faaa0033',
-  code: '#08080A', codeText: '#dcddde', spoiler: '#1e1f22',
-  spoilerRevealed: '#232428', positive: '#23a55a', warning: '#faaa00',
-  danger: '#d22d39', dangerFill: '#d22d39', scrim: '#000000cc',
-}
-
-const dark: Look = {
-  palette: black,
-  extra: {
-    // Keep the legacy composer and control edges understated.
-    MOBILE_CHATINPUT_BORDER_DEFAULT: '#ffffff14',
-    MOBILE_CHATINPUT_BORDER_ACTIVE: '#ffffff29',
-    CONTROL_PRIMARY_BORDER_DEFAULT: '#ffffff14',
-    CONTROL_SECONDARY_BORDER_DEFAULT: '#ffffff14',
-    CONTROL_SECONDARY_BORDER_ACTIVE: '#ffffff29',
-    INPUT_BORDER_DEFAULT: '#ffffff1f',
-    BORDER_FOCUS: '#ffffff29',
-  },
-}
-
 export default plugin({
   preInit({ themes }) {
     themes.registerGroup('mylloon', {
       name: 'Mylloon',
-      description: "Mylloon's original pure-black Discord theme.",
-    })
+      description: "Mylloon's original pure-black Discord theme."
+    });
+    const semantic = {
+      BACKGROUND_BASE_LOWEST:'#000000', BACKGROUND_BASE_LOWER:'#000000',
+      BACKGROUND_BASE_LOW:'#000000', BACKGROUND_SECONDARY_ALT:'#000000',
+      BACKGROUND_SURFACE_HIGH:'#08080A', BACKGROUND_SURFACE_HIGHEST:'#08080A',
+      BACKGROUND_ACCENT:'#08080A', BG_SURFACE_RAISED:'#08080A',
+      CHANNEL_BACKGROUND_DEFAULT:'#000000', PANEL_BG:'#000000',
+      STANDALONE_CHANNEL_CONTENT_BACKGROUND:'#000000',
+      MOBILE_ACTIONSHEET_BACKGROUND:'#08080A', MOBILE_ACTIONSHEET_GRADIENT_BACKGROUND_DEFAULT:'#08080A',
+      MODAL_BACKGROUND:'#08080A', MODAL_FOOTER_BACKGROUND:'#08080A',
+      CARD_BACKGROUND_DEFAULT:'#08080A', CARD_MUTED_BG:'#08080A',
+      CARD_SECONDARY_BG:'#08080A', CARD_SECONDARY_BACKGROUND_DEFAULT:'#08080A',
+      CARD_MUTED_PRESSED_BG:'#1e1f22', CARD_PRIMARY_PRESSED_BG:'#1e1f22',
+      CARD_SECONDARY_PRESSED_BG:'#1e1f22', CARD_SECONDARY_BACKGROUND_ACTIVE:'#1e1f22',
+      TABLEROW_BACKGROUND_DEFAULT:'#08080A', TABLEROW_BACKGROUND_PRESSED:'#1e1f22',
+      EMBED_BACKGROUND:'#08080A', EMBED_BACKGROUND_ALTERNATE:'#08080A',
+      MOBILE_EMBED_BACKGROUND_DEFAULT:'#08080A', MOBILE_THREAD_EMBED_BACKGROUND:'#08080A',
+      MOBILE_EMOJI_BUTTON_BACKGROUND:'#08080A', MOBILE_SEGMENTED_CONTROL_BACKGROUND:'#08080A',
+      MOBILE_SEGMENTED_CONTROL_INDICATOR_BACKGROUND:'#1e1f22',
+      INTERACTIVE_BACKGROUND_DEFAULT:'#000000', INTERACTIVE_BACKGROUND_HOVER:'#08080A',
+      INTERACTIVE_BACKGROUND_ACTIVE:'#1e1f22', INTERACTIVE_BACKGROUND_SELECTED:'#1e1f22',
+      CONTROL_SECONDARY_BACKGROUND_DEFAULT:'#08080A', CONTROL_SECONDARY_BACKGROUND_ACTIVE:'#1e1f22',
+      INPUT_BACKGROUND_DEFAULT:'#08080A', CHANNELTEXTAREA_BACKGROUND:'#08080A',
+      CHAT_INPUT_BACKGROUND:'#08080A', SHARE_CHAT_INPUT_BACKGROUND:'#08080A',
+      REDESIGN_CHAT_INPUT_BACKGROUND:'#08080A',
+      MOBILE_CHATINPUT_BACKGROUND_DEFAULT:'#08080A', MOBILE_CHATINPUT_BACKGROUND_ACTIVE:'#08080A',
+      MOBILE_CHATINPUT_BORDER_DEFAULT:'#ffffff14', MOBILE_CHATINPUT_BORDER_ACTIVE:'#ffffff29',
+      INPUT_BORDER_DEFAULT:'#ffffff1f', BORDER_FOCUS:'#ffffff29',
+      APP_FRAME_BORDER:'#ffffff14', BORDER_SUBTLE:'#ffffff14', BORDER_MUTED:'#ffffff14',
+      BORDER_NORMAL:'#ffffff1f', BORDER_STRONG:'#ffffff29', CARD_BORDER_DEFAULT:'#ffffff14',
+      CHAT_BORDER:'#ffffff14', MOBILE_HEADER_BORDER:'#ffffff14',
+      MOBILE_COMMAND_BAR_DIVIDER:'#ffffff14', STANDALONE_CHANNEL_HEADER_BORDER:'#ffffff14',
+      CONTROL_SECONDARY_BORDER_DEFAULT:'#ffffff14', CONTROL_SECONDARY_BORDER_ACTIVE:'#ffffff29',
+      CONTROL_PRIMARY_BORDER_DEFAULT:'#ffffff14',
+      SWITCH_BACKGROUND_DEFAULT:'#08080A', SWITCH_BORDER_DEFAULT:'#ffffff1f',
+      SWITCH_BACKGROUND_SELECTED_DEFAULT:'#232428', SWITCH_BORDER_SELECTED_DEFAULT:'#ffffff29',
+      CHECKBOX_BORDER_DEFAULT:'#ffffff29', CHECKBOX_BORDER_SELECTED_DEFAULT:'#ffffff29',
+      RADIO_BORDER_DEFAULT:'#ffffff29', TOGGLEBUTTON_BORDER_SELECTED:'#ffffff29',
+      SLIDER_TRACK_BACKGROUND:'#1e1f22',
+      SPOILER_HIDDEN_BACKGROUND:'#1e1f22', SPOILER_REVEALED_BACKGROUND:'#232428',
+      REACTION_BACKGROUND_DEFAULT:'#08080A', REACTION_BORDER_DEFAULT:'#ffffff14',
+      REACTION_BACKGROUND_REACTED_DEFAULT:'#5865f23d', REACTION_BORDER_REACTED_DEFAULT:'#5865f2'
+    };
+    const raw = {
+      PRIMARY_560:'#08080A', PRIMARY_600:'#000000', PRIMARY_630:'#000000',
+      PRIMARY_660:'#08080A', PRIMARY_700:'#08080A', PRIMARY_800:'#08080A',
+      PLUM_15:'#08080A', PLUM_17:'#000000', PLUM_18:'#08080A',
+      PLUM_19:'#08080A', PLUM_20:'#000000', PLUM_23:'#000000', PLUM_24:'#08080A'
+    };
     themes.registerTheme('mylloon', 'system-black', {
       name: 'System Black',
-      description: "Mylloon's legacy black palette, adapted for current Discord surfaces and controls.",
-      getColors: lazyColors(tone, {
-        dark,
-        darker: dark,
-        midnight: dark,
-        light: dark,
-      }),
-    })
-  },
-})
+      description: "Mylloon's legacy black palette with modern Discord surfaces, composer and control borders.",
+      getColors(discord) {
+        return {
+          raw: Object.assign({}, discord.raw, raw),
+          semantic: { dark: semantic, darker: semantic, midnight: semantic, light: semantic }
+        };
+      }
+    });
+  }
+});

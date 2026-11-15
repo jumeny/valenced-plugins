@@ -29,8 +29,8 @@
         },
         "1.0.1": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
-          "sha256": "f6390112f7f59fbe7168d932c1b6b06e44b1221ff70bac8da465dfded735110a",
-          "size": 61313,
+          "sha256": "369a20721bf3b94227ce35603da8c63d9befc3045bc5040c900cbbb30c707cf8",
+          "size": 4842,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

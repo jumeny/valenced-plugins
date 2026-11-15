@@ -77,9 +77,9 @@ jobs:
           cp -R themes/system-black upstream/themes/system-black
           cd upstream
           npm run package
-          test -s "build/dist/mylloon.theme.system-black@1.0.2.zip"
+          test -s "build/dist/mylloon.theme.system-black@1.0.3.zip"
           mkdir -p ../pool
-          cp "build/dist/mylloon.theme.system-black@1.0.2.zip" "../pool/mylloon.theme.system-black@1.0.2.zip"
+          cp "build/dist/mylloon.theme.system-black@1.0.3.zip" "../pool/mylloon.theme.system-black@1.0.3.zip"
 
       - name: Validate ZIP contents and update index digest
         run: |
@@ -88,7 +88,20 @@ jobs:
           from pathlib import Path
 
           description = "Legacy AMOLED theme, before TabsV2."
-          package_path = Path("pool/mylloon.theme.system-black@1.0.2.zip")
+          semantic_source = Path("themes/system-black/js/index.ts").read_text()
+          required_black = [
+              "MOBILE_ACTIONSHEET_BACKGROUND",
+              "MODAL_BACKGROUND",
+              "MOBILE_FLOATING_ACCESSORY_BACKGROUND",
+              "MOBILE_FLOATING_ACCESSORY_BORDER",
+              "MOBILE_FLOATINGBAR_BACKGROUND",
+              "MOBILE_FLOATINGBAR_BACKGROUND_HIGHER",
+              "MOBILE_FLOATINGBAR_BACKGROUND_NAMEPLATE",
+              "USER_PROFILE_GRADIENT_BACKGROUND",
+          ]
+          for key in required_black:
+              assert f"{key}:'#000000'" in semantic_source, f"{key} must remain pure black"
+          package_path = Path("pool/mylloon.theme.system-black@1.0.3.zip")
           with zipfile.ZipFile(package_path) as z:
               names = set(z.namelist())
               required = {"manifest.json", "index.js", "LICENSE", "LICENSE.rain"}
@@ -97,7 +110,7 @@ jobs:
               assert source.strip(), "Compiled entry point is empty"
               assert "export default" not in source, "Bundle still contains uncompiled TypeScript"
               manifest = json.loads(z.read("manifest.json"))
-              assert manifest["version"] == "1.0.2", manifest
+              assert manifest["version"] == "1.0.3", manifest
               assert manifest["name"] == "AMOLED", manifest
               assert manifest["description"] == description, manifest
 
@@ -108,17 +121,17 @@ jobs:
           plugin = index["plugins"]["mylloon.theme.system-black"]
           plugin["name"] = "AMOLED"
           plugin["description"] = description
-          plugin["versions"]["1.0.2"] = {
-              "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.2.zip",
+          plugin["versions"]["1.0.3"] = {
+              "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.3.zip",
               "sha256": hashlib.sha256(package).hexdigest(),
               "size": len(package),
               "dependencies": {
                   "valenced.api": {"version": ">=1 <2"},
                   "discord": {"version": ">=352.2"},
-                  "valenced.api.themes": {"version": ">=1.0.2 <2"}
+                  "valenced.api.themes": {"version": ">=1.0.1 <2"}
               }
           }
-          plugin["channels"]["latest"] = "1.0.2"
+          plugin["channels"]["latest"] = "1.0.3"
           path.write_text(json.dumps(index, indent=2) + "\n")
           print("Validated AMOLED ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
@@ -127,7 +140,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pool/mylloon.theme.system-black@1.0.2.zip index.json
+          git add pool/mylloon.theme.system-black@1.0.3.zip index.json
           git commit -m "Release AMOLED theme 1.0.2"
           git push
 

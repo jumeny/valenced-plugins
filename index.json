@@ -5,16 +5,32 @@
   "plugins": {
     "mylloon.theme.system-black": {
       "name": "System Black (Mylloon)",
-      "description": "Mylloon's original pure-black Discord theme.",
+      "description": "Mylloon's original pure-black theme, using Valenced's semantic theme colour pipeline.",
       "author": "Mylloon <158260864623968257>",
       "channels": {
-        "latest": "1.0.0"
+        "latest": "1.0.1"
       },
       "versions": {
         "1.0.0": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.0.zip",
           "sha256": "1915c11d22eb292b2edc3dd71174f10cab7b0c7ded61dfe42092e8853f24262b",
           "size": 2093,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": ">=352.2"
+            },
+            "valenced.api.themes": {
+              "version": ">=1.0.1 <2"
+            }
+          }
+        },
+        "1.0.1": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
+          "sha256": "fb74b35a7458ad7f764f0024f328e69b957d83b85a19a39c495bccdb2f8099ea",
+          "size": 1654,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

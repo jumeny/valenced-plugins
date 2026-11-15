@@ -114,7 +114,7 @@ jobs:
               manifest = json.loads(z.read("manifest.json"))
               assert manifest["version"] == "1.0.5", manifest
               assert manifest["name"] == "AMOLED", manifest
-          assert manifest["author"] == "jmny", manifest
+              assert manifest["author"] == "jmny", manifest
               assert manifest["description"] == description, manifest
 
           package = package_path.read_bytes()

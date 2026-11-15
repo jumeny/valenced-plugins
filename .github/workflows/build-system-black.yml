@@ -46,6 +46,7 @@ jobs:
           fs.writeFileSync('package.json', cleanJson)
           NODE
           npm install --ignore-scripts --legacy-peer-deps
+          npm install --no-save --no-package-lock --ignore-scripts --legacy-peer-deps @swc/core@^1.16.2 rolldown@^1.2.7
 
       - name: Install the pinned official CLI source
         working-directory: upstream

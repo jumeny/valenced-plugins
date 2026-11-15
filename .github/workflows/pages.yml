@@ -3,11 +3,9 @@ name: Deploy Valenced plugin repository
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "themes/system-black/**"
-      - "index.json"
-      - ".github/workflows/build-system-black.yml"
+    paths:
       - ".github/workflows/pages.yml"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -17,7 +15,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -37,7 +35,10 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: valenced-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: .
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: valenced-pages-${{ github.run_id }}-${{ github.run_attempt }}

@@ -22,10 +22,23 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - name: Install the official build toolchain
+          node-version: 24
+      - name: Prepare dependencies without triggering the CLI's premature prepare hook
         working-directory: upstream
-        run: npm ci --ignore-scripts --legacy-peer-deps
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs'
+          const p = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+          delete p.dependencies['@valenced/plugin-cli']
+          fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\\n')
+          NODE
+          npm install --ignore-scripts --legacy-peer-deps
+      - name: Install the pinned official CLI source
+        working-directory: upstream
+        run: |
+          mkdir -p node_modules/@valenced
+          git clone https://github.com/Valenced/valenced-plugin-cli.git node_modules/@valenced/plugin-cli
+          git -C node_modules/@valenced/plugin-cli checkout c8854005208fa29c0f56eac265fd596320a48713
       - name: Restore pinned Valenced build tools
         working-directory: upstream
         run: |
@@ -39,13 +52,21 @@ jobs:
           npm run package
           mkdir -p ../pool
           cp "build/dist/mylloon.theme.system-black@1.0.1.zip" "../pool/mylloon.theme.system-black@1.0.1.zip"
-      - name: Update repository index with the built ZIP digest
+      - name: Validate ZIP contents and update index digest
         run: |
           python3 - <<'PY'
-          import hashlib, json
+          import hashlib, json, zipfile
           from pathlib import Path
-
-          package = Path("pool/mylloon.theme.system-black@1.0.1.zip").read_bytes()
+          package_path = Path("pool/mylloon.theme.system-black@1.0.1.zip")
+          with zipfile.ZipFile(package_path) as z:
+              names = set(z.namelist())
+              assert "manifest.json" in names, names
+              assert "index.js" in names, names
+              source = z.read("index.js").decode("utf-8")
+              assert "export default" not in source, "Bundle still contains uncompiled TypeScript"
+              manifest = json.loads(z.read("manifest.json"))
+              assert manifest["version"] == "1.0.1", manifest
+          package = package_path.read_bytes()
           path = Path("index.json")
           index = json.loads(path.read_text())
           plugin = index["plugins"]["mylloon.theme.system-black"]
@@ -61,8 +82,8 @@ jobs:
           }
           plugin["channels"]["latest"] = "1.0.1"
           plugin["description"] = "Mylloon's original pure-black Discord theme with updated composer and divider colours."
-          path.write_text(json.dumps(index, indent=2) + "\n")
-          print("Built ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
+          path.write_text(json.dumps(index, indent=2) + "\\n")
+          print("Validated compiled ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
       - name: Commit the package and index
         run: |

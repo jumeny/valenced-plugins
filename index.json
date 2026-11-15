@@ -8,7 +8,7 @@
       "description": "Legacy AMOLED theme, before TabsV2.",
       "author": "Mylloon <158260864623968257>",
       "channels": {
-        "latest": "1.0.3"
+        "latest": "1.0.4"
       },
       "versions": {
         "1.0.0": {
@@ -63,6 +63,22 @@
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.3.zip",
           "sha256": "1f7209b823e7c1651076cc33e5d430f00fd301c3423ef022fa71cb9fac3ccb6e",
           "size": 18372,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": ">=352.2"
+            },
+            "valenced.api.themes": {
+              "version": ">=1.0.1 <2"
+            }
+          }
+        },
+        "1.0.4": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.4.zip",
+          "sha256": "3557dcc781f233a9028982cae19675919c747e802826e1525c5bf3e881e53cc7",
+          "size": 18353,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

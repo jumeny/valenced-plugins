@@ -1,0 +1,22 @@
+{
+  "format": 1,
+  "id": "mylloon.theme.system-black",
+  "name": "System Black (Mylloon)",
+  "description": "Mylloon's original pure-black theme, expanded for modern Discord surfaces and controls.",
+  "author": "Mylloon <158260864623968257>",
+  "version": "1.0.1",
+  "dependencies": {
+    "valenced.api": {
+      "version": ">=1 <2"
+    },
+    "discord": {
+      "version": ">=352.2"
+    },
+    "valenced.api.themes": {
+      "version": ">=1.0.1 <2"
+    }
+  },
+  "dist": {
+    "script": "index.js"
+  }
+}

@@ -77,9 +77,9 @@ jobs:
           cp -R themes/system-black upstream/themes/system-black
           cd upstream
           npm run package
-          test -s "build/dist/mylloon.theme.system-black@1.0.3.zip"
+          test -s "build/dist/mylloon.theme.system-black@1.0.4.zip"
           mkdir -p ../pool
-          cp "build/dist/mylloon.theme.system-black@1.0.3.zip" "../pool/mylloon.theme.system-black@1.0.3.zip"
+          cp "build/dist/mylloon.theme.system-black@1.0.4.zip" "../pool/mylloon.theme.system-black@1.0.4.zip"
 
       - name: Validate ZIP contents and update index digest
         run: |
@@ -101,7 +101,9 @@ jobs:
           ]
           for key in required_black:
               assert f"{key}:'#000000'" in semantic_source, f"{key} must remain pure black"
-          package_path = Path("pool/mylloon.theme.system-black@1.0.3.zip")
+          for key in ["BACKGROUND_SCRIM", "CONTEXT_MENU_BACKDROP_BACKGROUND"]:
+              assert not any(line.lstrip().startswith(key + ":") for line in semantic_source.splitlines()), f"{key} must use the default blurred backdrop"
+          package_path = Path("pool/mylloon.theme.system-black@1.0.4.zip")
           with zipfile.ZipFile(package_path) as z:
               names = set(z.namelist())
               required = {"manifest.json", "index.js", "LICENSE", "LICENSE.rain"}
@@ -110,7 +112,7 @@ jobs:
               assert source.strip(), "Compiled entry point is empty"
               assert "export default" not in source, "Bundle still contains uncompiled TypeScript"
               manifest = json.loads(z.read("manifest.json"))
-              assert manifest["version"] == "1.0.3", manifest
+              assert manifest["version"] == "1.0.4", manifest
               assert manifest["name"] == "AMOLED", manifest
               assert manifest["description"] == description, manifest
 
@@ -121,8 +123,8 @@ jobs:
           plugin = index["plugins"]["mylloon.theme.system-black"]
           plugin["name"] = "AMOLED"
           plugin["description"] = description
-          plugin["versions"]["1.0.3"] = {
-              "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.3.zip",
+          plugin["versions"]["1.0.4"] = {
+              "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.4.zip",
               "sha256": hashlib.sha256(package).hexdigest(),
               "size": len(package),
               "dependencies": {
@@ -131,7 +133,7 @@ jobs:
                   "valenced.api.themes": {"version": ">=1.0.1 <2"}
               }
           }
-          plugin["channels"]["latest"] = "1.0.3"
+          plugin["channels"]["latest"] = "1.0.4"
           path.write_text(json.dumps(index, indent=2) + "\n")
           print("Validated AMOLED ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
@@ -140,8 +142,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pool/mylloon.theme.system-black@1.0.3.zip index.json
-          git commit -m "Release AMOLED theme 1.0.2"
+          git add pool/mylloon.theme.system-black@1.0.4.zip index.json
+          git commit -m "Release AMOLED theme 1.0.4"
           git push
 
   deploy:

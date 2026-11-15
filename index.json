@@ -7,14 +7,12 @@
       "name": "System Black (Mylloon)",
       "description": "Mylloon's original pure-black Discord theme, ported to the native Valenced Themes API.",
       "author": "Mylloon <158260864623968257>",
-      "channels": {
-        "latest": "1.0.0"
-      },
+      "channels": { "latest": "1.0.0" },
       "versions": {
         "1.0.0": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.0.zip",
-          "sha256": "1ba6b160b8aba7e41284beb00303dc968cdd38b184eefd27145e2937439258ca",
-          "size": 2090,
+          "sha256": "1915c11d22eb292b2edc3dd71174f10cab7b0c7ded61dfe42092e8853f24262b",
+          "size": 2093,
           "dependencies": {
             "valenced.api": { "version": ">=1 <2" },
             "discord": { "version": ">=352.2" },

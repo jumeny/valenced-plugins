@@ -82,7 +82,7 @@ jobs:
           }
           plugin["channels"]["latest"] = "1.0.1"
           plugin["description"] = "Mylloon's original pure-black Discord theme with updated composer and divider colours."
-          path.write_text(json.dumps(index, indent=2) + "\\n")
+          path.write_text(json.dumps(index, indent=2) + chr(10))
           print("Validated compiled ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
       - name: Commit the package and index

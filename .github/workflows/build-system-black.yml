@@ -88,8 +88,8 @@ jobs:
           from pathlib import Path
 
           description = "Legacy AMOLED theme, before TabsV2."
-release_version = "0.0.1-alpha"
-assert re.fullmatch(r"\d+(?:\.\d+)*(?:-[a-z0-9]+)?", release_version), release_version
+          release_version = "0.0.1-alpha"
+          assert re.fullmatch(r"\d+(?:\.\d+)*(?:-[a-z0-9]+)?", release_version), release_version
           semantic_source = Path("themes/system-black/js/index.ts").read_text()
           required_black = [
               "MOBILE_ACTIONSHEET_BACKGROUND",

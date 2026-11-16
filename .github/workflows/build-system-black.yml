@@ -77,9 +77,9 @@ jobs:
           cp -R themes/system-black upstream/themes/system-black
           cd upstream
           npm run package
-          test -s "build/dist/jmny.looks.amoled@0.0.1-alpha.zip"
+          test -s "build/dist/jmny.looks.amoled@0.0.2-alpha.zip"
           mkdir -p ../pool
-          cp "build/dist/jmny.looks.amoled@0.0.1-alpha.zip" "../pool/jmny.looks.amoled@0.0.1-alpha.zip"
+          cp "build/dist/jmny.looks.amoled@0.0.2-alpha.zip" "../pool/jmny.looks.amoled@0.0.2-alpha.zip"
 
       - name: Validate ZIP contents and update index digest
         run: |
@@ -88,7 +88,7 @@ jobs:
           from pathlib import Path
 
           description = "Legacy AMOLED theme, before TabsV2."
-          release_version = "0.0.1-alpha"
+          release_version = "0.0.2-alpha"
           assert re.fullmatch(r"\d+(?:\.\d+)*(?:-[a-z0-9]+)?", release_version), release_version
           semantic_source = Path("themes/system-black/js/index.ts").read_text()
           required_black = [
@@ -103,9 +103,10 @@ jobs:
           ]
           for key in required_black:
               assert f"{key}:'#000000'" in semantic_source, f"{key} must remain pure black"
+          assert not any(line.lstrip().startswith("SPINE_DEFAULT:") for line in semantic_source.splitlines()), "SPINE_DEFAULT must use Discord's default color"
           for key in ["BACKGROUND_SCRIM", "CONTEXT_MENU_BACKDROP_BACKGROUND"]:
               assert not any(line.lstrip().startswith(key + ":") for line in semantic_source.splitlines()), f"{key} must use the default blurred backdrop"
-          package_path = Path("pool/jmny.looks.amoled@0.0.1-alpha.zip")
+          package_path = Path("pool/jmny.looks.amoled@0.0.2-alpha.zip")
           with zipfile.ZipFile(package_path) as z:
               names = set(z.namelist())
               required = {"manifest.json", "index.js", "LICENSE", "LICENSE.rain"}
@@ -133,7 +134,7 @@ jobs:
           plugin["name"] = "AMOLED"
           plugin["description"] = description
           plugin["versions"][release_version] = {
-              "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.1-alpha.zip",
+              "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.2-alpha.zip",
               "sha256": hashlib.sha256(package).hexdigest(),
               "size": len(package),
               "dependencies": {
@@ -153,8 +154,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm --ignore-unmatch pool/jmny.looks.amoled@0.0.1a.zip
-          git add pool/jmny.looks.amoled@0.0.1-alpha.zip index.json
-          git commit -m "Release AMOLED theme 0.0.1-alpha"
+          git add pool/jmny.looks.amoled@0.0.2-alpha.zip index.json
+          git commit -m "Release AMOLED theme 0.0.2-alpha"
           git push
 
   deploy:

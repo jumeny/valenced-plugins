@@ -4,7 +4,7 @@
   "name": "AMOLED",
   "description": "Legacy AMOLED theme, before TabsV2.",
   "author": "jmny",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "dependencies": {
     "valenced.api": {
       "version": ">=1 <2"

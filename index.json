@@ -8,13 +8,13 @@
       "description": "Legacy AMOLED theme, before TabsV2.",
       "author": "jmny",
       "channels": {
-        "latest": "0.0.5-alpha"
+        "latest": "0.0.4-alpha"
       },
       "versions": {
-        "0.0.5-alpha": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.5-alpha.zip",
-          "sha256": "6542f0d574ad5253625873fc37cacf4dfa90bd80445919a042e68533540a82ce",
-          "size": 18316,
+        "0.0.4-alpha": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.4-alpha.zip",
+          "sha256": "807a0319204ff0897df0c78288fca559ff87990e85b6ea3bd39b6eed4b806ac5",
+          "size": 18323,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

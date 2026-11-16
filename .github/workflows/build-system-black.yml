@@ -89,7 +89,7 @@ jobs:
 
           description = "Legacy AMOLED theme, before TabsV2."
 release_version = "0.0.1-alpha"
-assert re.fullmatch(r"\\d+(?:\\.\\d+)*(?:-[a-z0-9]+)?", release_version), release_version
+assert re.fullmatch(r"\d+(?:\.\d+)*(?:-[a-z0-9]+)?", release_version), release_version
           semantic_source = Path("themes/system-black/js/index.ts").read_text()
           required_black = [
               "MOBILE_ACTIONSHEET_BACKGROUND",
@@ -153,7 +153,7 @@ assert re.fullmatch(r"\\d+(?:\\.\\d+)*(?:-[a-z0-9]+)?", release_version), releas
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm --ignore-unmatch pool/jmny.looks.amoled@0.0.1a.zip
-git add pool/jmny.looks.amoled@0.0.1-alpha.zip index.json
+          git add pool/jmny.looks.amoled@0.0.1-alpha.zip index.json
           git commit -m "Release AMOLED theme 0.0.1-alpha"
           git push
 

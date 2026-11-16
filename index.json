@@ -1,100 +1,20 @@
 {
   "format": 1,
   "name": "jmny",
-  "description": "(*・‿・)ノ⌒*:･ﾟ✧",
+  "description": "(*\u30fb\u203f\u30fb)\u30ce\u2312*:\uff65\uff9f\u2727",
   "plugins": {
-    "mylloon.theme.system-black": {
+    "jmny.theme.system-black": {
       "name": "AMOLED",
       "description": "Legacy AMOLED theme, before TabsV2.",
       "author": "jmny",
       "channels": {
-        "latest": "1.0.5"
+        "latest": "1.0.6"
       },
       "versions": {
-        "1.0.0": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.0.zip",
-          "sha256": "1915c11d22eb292b2edc3dd71174f10cab7b0c7ded61dfe42092e8853f24262b",
-          "size": 2093,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.1 <2"
-            }
-          }
-        },
-        "1.0.1": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.1.zip",
-          "sha256": "1238a5c4ab425a74aa2fb2d1c7f488dfe661c8eac24a1ae2f6344d88544ea132",
-          "size": 18206,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.1 <2"
-            }
-          }
-        },
-        "1.0.2": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.2.zip",
-          "sha256": "327bdd59441597f37a26232ce3b575b131ec993bedebe6241ec126ebc351a491",
-          "size": 18375,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.2 <2"
-            }
-          }
-        },
-        "1.0.3": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.3.zip",
-          "sha256": "1f7209b823e7c1651076cc33e5d430f00fd301c3423ef022fa71cb9fac3ccb6e",
-          "size": 18372,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.1 <2"
-            }
-          }
-        },
-        "1.0.4": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.4.zip",
-          "sha256": "3557dcc781f233a9028982cae19675919c747e802826e1525c5bf3e881e53cc7",
-          "size": 18353,
-          "dependencies": {
-            "valenced.api": {
-              "version": ">=1 <2"
-            },
-            "discord": {
-              "version": ">=352.2"
-            },
-            "valenced.api.themes": {
-              "version": ">=1.0.1 <2"
-            }
-          }
-        },
-        "1.0.5": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/mylloon.theme.system-black@1.0.5.zip",
-          "sha256": "5ed95f8964a0e0d515c547ae2e7142733d9d8ceac0115410c00bb16aa8554cee",
-          "size": 18329,
+        "1.0.6": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.theme.system-black@1.0.6.zip",
+          "sha256": "194bc6d8e51240f5c786fca54b576869fefa3891d5d3ca9306bf232d733c51a7",
+          "size": 18324,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

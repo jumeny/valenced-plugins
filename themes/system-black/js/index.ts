@@ -2,8 +2,8 @@
 
 export default plugin({
   preInit({ themes }) {
-    themes.registerGroup('mylloon', {
-      name: 'Mylloon',
+    themes.registerGroup('jmny', {
+      name: 'jmny',
       description: "Legacy AMOLED theme, before TabsV2."
     });
     const semantic = {
@@ -79,7 +79,7 @@ export default plugin({
       PLUM_15:'#08080A', PLUM_17:'#000000', PLUM_18:'#08080A',
       PLUM_19:'#08080A', PLUM_20:'#000000', PLUM_23:'#000000', PLUM_24:'#08080A'
     };
-    themes.registerTheme('mylloon', 'system-black', {
+    themes.registerTheme('jmny', 'system-black', {
       name: 'AMOLED',
       description: "Legacy AMOLED theme, before TabsV2.",
       getColors(discord) {

@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "id": "mylloon.theme.system-black",
+  "id": "jmny.theme.system-black",
   "name": "AMOLED",
   "description": "Legacy AMOLED theme, before TabsV2.",
   "author": "jmny",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "dependencies": {
     "valenced.api": {
       "version": ">=1 <2"

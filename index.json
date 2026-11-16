@@ -13,8 +13,8 @@
       "versions": {
         "0.0.3-alpha": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.3-alpha.zip",
-          "sha256": "f20f2e797b5ac026063461aac830f1475e28473802266eddbab40c52ec6a75ab",
-          "size": 18323,
+          "sha256": "26f971c97fb41875454fd3c0049aced29c10139435773273e1f3f6d5e459adae",
+          "size": 18295,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "name": "jmny",
-  "description": "(*\u30fb\u203f\u30fb)\u30ce\u2312*:\uff65\uff9f\u2727",
+  "description": "(*・‿・)ノ⌒*:･ﾟ✧",
   "plugins": {
-    "jmny.theme.system-black": {
+    "jmny.looks.amoled": {
       "name": "AMOLED",
       "description": "Legacy AMOLED theme, before TabsV2.",
       "author": "jmny",
       "channels": {
-        "latest": "1.0.6"
+        "latest": "0.0.1a"
       },
       "versions": {
-        "1.0.6": {
-          "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.theme.system-black@1.0.6.zip",
-          "sha256": "194bc6d8e51240f5c786fca54b576869fefa3891d5d3ca9306bf232d733c51a7",
-          "size": 18324,
+        "0.0.1a": {
+          "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.1a.zip",
+          "sha256": "",
+          "size": 0,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"

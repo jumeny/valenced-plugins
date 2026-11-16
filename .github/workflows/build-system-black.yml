@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: amoled-release
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -77,9 +77,9 @@ jobs:
           cp -R themes/system-black upstream/themes/system-black
           cd upstream
           npm run package
-          test -s "build/dist/jmny.theme.system-black@1.0.6.zip"
+          test -s "build/dist/jmny.looks.amoled@0.0.1a.zip"
           mkdir -p ../pool
-          cp "build/dist/jmny.theme.system-black@1.0.6.zip" "../pool/jmny.theme.system-black@1.0.6.zip"
+          cp "build/dist/jmny.looks.amoled@0.0.1a.zip" "../pool/jmny.looks.amoled@0.0.1a.zip"
 
       - name: Validate ZIP contents and update index digest
         run: |
@@ -103,7 +103,7 @@ jobs:
               assert f"{key}:'#000000'" in semantic_source, f"{key} must remain pure black"
           for key in ["BACKGROUND_SCRIM", "CONTEXT_MENU_BACKDROP_BACKGROUND"]:
               assert not any(line.lstrip().startswith(key + ":") for line in semantic_source.splitlines()), f"{key} must use the default blurred backdrop"
-          package_path = Path("pool/jmny.theme.system-black@1.0.6.zip")
+          package_path = Path("pool/jmny.looks.amoled@0.0.1a.zip")
           with zipfile.ZipFile(package_path) as z:
               names = set(z.namelist())
               required = {"manifest.json", "index.js", "LICENSE", "LICENSE.rain"}
@@ -112,7 +112,7 @@ jobs:
               assert source.strip(), "Compiled entry point is empty"
               assert "export default" not in source, "Bundle still contains uncompiled TypeScript"
               manifest = json.loads(z.read("manifest.json"))
-              assert manifest["version"] == "1.0.6", manifest
+              assert manifest["version"] == "0.0.1a", manifest
               assert manifest["name"] == "AMOLED", manifest
               assert manifest["author"] == "jmny", manifest
               assert manifest["description"] == description, manifest
@@ -125,13 +125,13 @@ jobs:
               "name": "AMOLED",
               "description": description,
               "author": "jmny",
-              "channels": {"latest": "1.0.6"},
+              "channels": {"latest": "0.0.1a"},
               "versions": {}
           }
           plugin["name"] = "AMOLED"
           plugin["description"] = description
-          plugin["versions"]["1.0.6"] = {
-              "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.theme.system-black@1.0.6.zip",
+          plugin["versions"]["0.0.1a"] = {
+              "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.1a.zip",
               "sha256": hashlib.sha256(package).hexdigest(),
               "size": len(package),
               "dependencies": {
@@ -140,8 +140,8 @@ jobs:
                   "valenced.api.themes": {"version": ">=1.0.1 <2"}
               }
           }
-          plugin["channels"]["latest"] = "1.0.6"
-          index["plugins"] = {"jmny.theme.system-black": plugin}
+          plugin["channels"]["latest"] = "0.0.1a"
+          index["plugins"] = {"jmny.looks.amoled": plugin}
           path.write_text(json.dumps(index, indent=2) + "\n")
           print("Validated AMOLED ZIP:", len(package), "bytes; SHA-256:", hashlib.sha256(package).hexdigest())
           PY
@@ -150,8 +150,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pool/jmny.theme.system-black@1.0.6.zip index.json
-          git commit -m "Release AMOLED theme 1.0.6"
+          git add pool/jmny.looks.amoled@0.0.1a.zip index.json
+          git commit -m "Release AMOLED theme 0.0.1a"
           git push
 
   deploy:

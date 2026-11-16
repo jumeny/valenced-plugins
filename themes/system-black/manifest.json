@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "id": "jmny.theme.system-black",
+  "id": "jmny.looks.amoled",
   "name": "AMOLED",
   "description": "Legacy AMOLED theme, before TabsV2.",
   "author": "jmny",
-  "version": "1.0.6",
+  "version": "0.0.1a",
   "dependencies": {
     "valenced.api": {
       "version": ">=1 <2"

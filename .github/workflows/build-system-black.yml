@@ -103,8 +103,8 @@ jobs:
           ]
           for key in required_black:
               assert f"{key}:'#000000'" in semantic_source, f"{key} must remain pure black"
-          assert "SPINE_DEFAULT:" not in semantic_source, "SPINE_DEFAULT must use Discord default"
-          assert "BORDER_SUBTLE:" not in semantic_source, "BORDER_SUBTLE must use Discord default for forwarded-message quote stripe"
+          assert "SPINE_DEFAULT:" not in semantic_source, "SPINE_DEFAULT must retain Discord defaults"
+          assert "BORDER_SUBTLE:'#000000'" in semantic_source, "BORDER_SUBTLE must keep forwarded-message quote stripe AMOLED black"
           for key in ["BACKGROUND_SCRIM", "CONTEXT_MENU_BACKDROP_BACKGROUND"]:
               assert not any(line.lstrip().startswith(key + ":") for line in semantic_source.splitlines()), f"{key} must use the default blurred backdrop"
           package_path = Path("pool/jmny.looks.amoled@0.0.3-alpha.zip")

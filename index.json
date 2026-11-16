@@ -1,7 +1,7 @@
 {
   "format": 1,
   "name": "jmny",
-  "description": "(*・‿・)ノ⌒*:･ﾟ✧",
+  "description": "(*\u30fb\u203f\u30fb)\u30ce\u2312*:\uff65\uff9f\u2727",
   "plugins": {
     "jmny.looks.amoled": {
       "name": "AMOLED",
@@ -13,8 +13,8 @@
       "versions": {
         "0.0.1a": {
           "url": "https://jumeny.github.io/valenced-plugins/pool/jmny.looks.amoled@0.0.1a.zip",
-          "sha256": "",
-          "size": 0,
+          "sha256": "b7a20857baeac05b00ec9145dafca67a55d07feaf93b409ecf4e194f6c38d309",
+          "size": 18323,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"
